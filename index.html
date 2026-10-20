@@ -1,0 +1,1053 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capitulo 1 - Angie</title>
+
+<style>
+:root {
+  --night: #06152d;
+  --blue: #0d2c54;
+  --light-blue: #a9d8ff;
+  --pale-blue: #dcecff;
+  --text: #edf5ff;
+  --muted: #afc4df;
+  --glass: rgba(13, 39, 72, 0.78);
+  --border: rgba(177, 216, 255, 0.2);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: "Segoe UI", Arial, sans-serif;
+  background:
+    radial-gradient(ellipse at 15% 15%, #163f70 0%, transparent 42%),
+    radial-gradient(ellipse at 85% 80%, #102e59 0%, transparent 45%),
+    linear-gradient(145deg, #030d20, #071b38 55%, #061329);
+  overflow-x: hidden;
+}
+
+button, textarea, input { font: inherit; }
+
+#sky {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  display: block;
+  width: 2px;
+  height: 2px;
+  background: #e2f2ff;
+  border-radius: 50%;
+  opacity: 0.55;
+  animation: twinkle var(--duration, 4s) ease-in-out infinite alternate;
+  animation-delay: var(--delay, 0s);
+}
+
+.star.bright {
+  width: 3px;
+  height: 3px;
+  box-shadow: 0 0 8px 2px rgba(170, 215, 255, 0.45);
+}
+
+@keyframes twinkle {
+  from { opacity: 0.2; transform: scale(0.75); }
+  to { opacity: 0.95; transform: scale(1.3); }
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 30px, 720px);
+  margin: 0 auto;
+  padding: 34px 0 55px;
+}
+
+.topline {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  color: #bddcff;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.topline::before,
+.topline::after {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: rgba(189, 220, 255, 0.5);
+}
+
+.intro {
+  text-align: center;
+  padding: 6px 8px 18px;
+}
+
+.lily-art {
+  width: min(220px, 60vw);
+  height: auto;
+  margin: 0 auto 13px;
+  display: block;
+  filter: drop-shadow(0 0 16px rgba(130, 189, 255, 0.17));
+}
+
+.eyebrow {
+  color: #9fcaff;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.intro h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(34px, 8vw, 52px);
+  font-weight: 400;
+  line-height: 1.13;
+  letter-spacing: -1px;
+  margin: 0 auto 18px;
+  max-width: 590px;
+}
+
+.intro h1 span {
+  color: #a9d4ff;
+  font-style: italic;
+}
+
+.intro p {
+  color: var(--muted);
+  line-height: 1.85;
+  font-size: 15px;
+  max-width: 475px;
+  margin: 0 auto;
+}
+
+.lily-divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 13px;
+  margin: 25px auto;
+  color: #9bcaff;
+}
+
+.lily-divider span {
+  width: 65px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(155, 202, 255, 0.5));
+}
+
+.lily-divider span:last-child { transform: rotate(180deg); }
+
+.card {
+  border: 1px solid var(--border);
+  background: var(--glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 22px;
+  padding: clamp(21px, 5vw, 36px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+}
+
+.progress-area { margin-bottom: 28px; }
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #a9c8eb;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.progress-track {
+  height: 3px;
+  width: 100%;
+  background: rgba(180, 214, 255, 0.13);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #6da9e8, #d4eaff);
+  transition: width 0.4s ease;
+}
+
+.question-number {
+  color: #a6d0ff;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 13px;
+}
+
+.question-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(25px, 6vw, 32px);
+  line-height: 1.3;
+  font-weight: 400;
+  margin: 0 0 12px;
+}
+
+.question-description {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 0 0 23px;
+}
+
+.options { display: grid; gap: 10px; }
+
+.option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  color: var(--text);
+  border: 1px solid rgba(174, 210, 250, 0.2);
+  border-radius: 13px;
+  padding: 15px 16px;
+  background: rgba(7, 24, 48, 0.45);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease,
+              transform 0.2s ease;
+  line-height: 1.55;
+  font-size: 14px;
+}
+
+.option:hover {
+  background: rgba(83, 135, 193, 0.16);
+  border-color: rgba(174, 210, 250, 0.58);
+  transform: translateY(-1px);
+}
+
+.option.selected {
+  border-color: #a5d2ff;
+  background: rgba(105, 163, 223, 0.2);
+}
+
+.option:focus-visible,
+.primary-button:focus-visible,
+.secondary-button:focus-visible {
+  outline: 2px solid #c7e3ff;
+  outline-offset: 3px;
+}
+
+.write-label {
+  display: block;
+  color: #c1d9f5;
+  font-size: 13px;
+  margin: 22px 0 9px;
+}
+
+textarea {
+  display: block;
+  width: 100%;
+  min-height: 95px;
+  resize: vertical;
+  color: var(--text);
+  background: rgba(3, 15, 33, 0.5);
+  border: 1px solid rgba(174, 210, 250, 0.22);
+  border-radius: 12px;
+  padding: 13px 14px;
+  line-height: 1.7;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+textarea::placeholder { color: #7893b3; }
+
+textarea:focus { border-color: #9dcaff; }
+
+.button-row {
+  display: flex;
+  gap: 11px;
+  margin-top: 22px;
+}
+
+.primary-button,
+.secondary-button {
+  border-radius: 12px;
+  padding: 13px 17px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.primary-button {
+  flex: 1;
+  color: #06152b;
+  font-weight: 600;
+  border: 1px solid #c4e1ff;
+  background: linear-gradient(120deg, #d5eaff, #9bcaff);
+}
+
+.primary-button:hover {
+  transform: translateY(-1px);
+  background: #e6f3ff;
+}
+
+.secondary-button {
+  color: #c7def9;
+  background: transparent;
+  border: 1px solid rgba(174, 210, 250, 0.22);
+}
+
+.secondary-button:hover { background: rgba(130, 177, 228, 0.1); }
+
+.feedback {
+  display: none;
+  margin-top: 21px;
+  padding: 18px 17px;
+  border-left: 2px solid #9ccaff;
+  background: rgba(109, 161, 216, 0.09);
+  border-radius: 0 12px 12px 0;
+  animation: fadeIn 0.45s ease both;
+}
+
+.feedback.show { display: block; }
+
+.feedback p {
+  color: #d7e9ff;
+  font-size: 14px;
+  line-height: 1.85;
+  margin: 0;
+}
+
+.feedback .small-note {
+  margin-top: 10px;
+  color: #9fb9d8;
+  font-size: 12px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hidden { display: none !important; }
+
+.final-card { text-align: center; }
+
+.final-card h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: clamp(29px, 7vw, 40px);
+  line-height: 1.25;
+  margin: 0 0 17px;
+}
+
+.final-card > p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+  margin: 0 auto 18px;
+  max-width: 490px;
+}
+
+.riddle {
+  text-align: left;
+  border: 1px solid rgba(174, 210, 250, 0.19);
+  background: rgba(3, 15, 33, 0.35);
+  border-radius: 15px;
+  padding: 19px;
+  margin: 24px 0;
+}
+
+.riddle p {
+  color: #d5e7fc;
+  line-height: 1.85;
+  font-size: 14px;
+  margin: 0 0 12px;
+}
+
+.riddle p:last-child { margin-bottom: 0; }
+
+.riddle strong {
+  color: #b6d9ff;
+  font-weight: 600;
+}
+
+.song-result {
+  margin-top: 24px;
+  padding: 22px 17px;
+  border: 1px solid rgba(174, 210, 250, 0.24);
+  border-radius: 16px;
+  background: rgba(104, 154, 208, 0.1);
+  animation: fadeIn 0.5s ease both;
+}
+
+.song-result .song-kicker {
+  color: #a6cefa;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+}
+
+.song-result h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(29px, 7vw, 42px);
+  font-weight: 400;
+  margin: 0 0 7px;
+  color: #d9ecff;
+}
+
+.song-result .artist { color: #a8c7e9; margin-bottom: 15px; }
+
+.song-result p {
+  color: #c7d9ef;
+  line-height: 1.85;
+  font-size: 14px;
+}
+
+.song-link {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 12px 18px;
+  border: 1px solid #a8d2ff;
+  border-radius: 11px;
+  color: #e4f2ff;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.song-link:hover { background: rgba(132, 184, 239, 0.15); }
+
+.final-note {
+  margin-top: 25px;
+  padding-top: 23px;
+  border-top: 1px solid rgba(174, 210, 250, 0.15);
+  text-align: left;
+}
+
+.final-note h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 1.4;
+  margin: 0 0 12px;
+}
+
+.final-note p {
+  color: #c5d9f1;
+  font-size: 14px;
+  line-height: 1.9;
+  margin: 0 0 12px;
+}
+
+.small-note {
+  color: #9fb9d8;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.signature {
+  text-align: center;
+  color: #91b7e2;
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-top: 30px;
+}
+
+.footer-lily {
+  width: 72px;
+  display: block;
+  margin: 20px auto 0;
+  opacity: 0.7;
+}
+
+@media (max-width: 480px) {
+  .page {
+    width: min(100% - 22px, 720px);
+    padding-top: 25px;
+  }
+
+  .card { border-radius: 18px; }
+
+  .button-row { flex-direction: column; }
+
+  .secondary-button { padding: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+<div id="sky" aria-hidden="true"></div>
+
+<main class="page">
+  <div class="topline">Un pequeño rincón azul</div>
+
+  <header class="intro">
+    <svg class="lily-art" viewBox="0 0 240 200" role="img"
+         aria-label="Ilustración de un lirio azul">
+      <defs>
+        <linearGradient id="petal" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#e2f1ff"/>
+          <stop offset="50%" stop-color="#9dc9f5"/>
+          <stop offset="100%" stop-color="#507fb6"/>
+        </linearGradient>
+        <linearGradient id="stem" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#487d91"/>
+          <stop offset="100%" stop-color="#a4d5d0"/>
+        </linearGradient>
+      </defs>
+
+      <path d="M121 187 C123 150 117 121 127 89"
+            stroke="url(#stem)" stroke-width="3" fill="none"
+            stroke-linecap="round"/>
+      <path d="M120 151 C91 128 79 140 73 151
+               C95 154 109 156 120 151Z"
+            fill="#477f91" opacity=".85"/>
+      <path d="M123 170 C148 143 163 149 171 157
+               C150 165 137 171 123 170Z"
+            fill="#6ba4ad" opacity=".8"/>
+
+      <path d="M124 110 C103 91 83 72 91 43
+               C111 56 123 75 124 110Z"
+            fill="url(#petal)" stroke="#d0e8ff" stroke-width="1"/>
+      <path d="M124 109 C106 75 111 43 133 22
+               C146 51 143 80 124 109Z"
+            fill="url(#petal)" stroke="#d0e8ff" stroke-width="1"/>
+      <path d="M127 110 C137 73 159 53 179 52
+               C176 83 151 102 127 110Z"
+            fill="url(#petal)" stroke="#d0e8ff" stroke-width="1"/>
+      <path d="M124 112 C149 94 174 93 192 110
+               C169 128 146 124 124 112Z"
+            fill="url(#petal)" stroke="#d0e8ff" stroke-width="1"/>
+      <path d="M122 111 C101 108 80 118 70 139
+               C95 139 113 128 122 111Z"
+            fill="url(#petal)" stroke="#d0e8ff" stroke-width="1"/>
+      <path d="M123 113 C113 139 116 157 132 171
+               C145 149 139 127 123 113Z"
+            fill="url(#petal)" stroke="#d0e8ff" stroke-width="1"/>
+
+      <path d="M124 112 L110 74 M124 112 L135 56
+               M124 112 L164 74 M124 112 L175 110
+               M124 112 L89 128"
+            stroke="#5f8dbb" stroke-width="1.2" opacity=".8" fill="none"/>
+
+      <path d="M124 111 L143 89 M124 111 L105 91
+               M124 111 L153 110"
+            stroke="#f0c98e" stroke-width="2" fill="none"
+            stroke-linecap="round"/>
+      <circle cx="144" cy="88" r="2.5" fill="#f3d8a4"/>
+      <circle cx="105" cy="91" r="2.5" fill="#f3d8a4"/>
+      <circle cx="153" cy="110" r="2.5" fill="#f3d8a4"/>
+
+      <path d="M41 50 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z"
+            fill="#d8eaff" opacity=".8"/>
+      <path d="M190 29 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z"
+            fill="#d8eaff" opacity=".8"/>
+      <circle cx="64" cy="83" r="2" fill="#e3f0ff"/>
+      <circle cx="202" cy="83" r="1.7" fill="#e3f0ff"/>
+    </svg>
+
+    <div class="eyebrow">Esto es para ti</div>
+    <h1>Por si hoy necesitas<br><span>un respiro</span></h1>
+
+    <p>
+      No tienes que estar de buen humor ni tener las palabras correctas.
+      Solo quería dejarte algo diferente, un ratito para ti,
+      sin expectativas y sin respuestas obligatorias.
+    </p>
+
+    <div class="lily-divider" aria-hidden="true">
+      <span></span>
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2 C8 8 3 10 5 15 C7 19 11 17 12 13
+                 C13 17 17 19 19 15 C21 10 16 8 12 2Z"
+              stroke="#a9d4ff" stroke-width="1.2"/>
+        <path d="M12 13 L12 22 M12 18 L8 16 M12 20 L16 17"
+              stroke="#a9d4ff" stroke-width="1.2"
+              stroke-linecap="round"/>
+      </svg>
+      <span></span>
+    </div>
+  </header>
+
+  <section class="card" id="quiz">
+    <div class="progress-area">
+      <div class="progress-label">
+        <span id="progressText">Un momento para ti</span>
+        <span id="progressCount">1 de 3</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <div id="questionArea">
+      <div class="question-number" id="questionNumber">Pregunta 01</div>
+      <h2 class="question-title" id="questionTitle"></h2>
+      <p class="question-description" id="questionDescription"></p>
+
+      <div class="options" id="options"></div>
+
+      <label class="write-label" for="ownAnswer">
+        O, si prefieres, puedes decirlo a tu manera.
+      </label>
+      <textarea id="ownAnswer"
+        placeholder="También puedes escribir lo que te nazca..."></textarea>
+
+      <div class="button-row">
+        <button class="primary-button" id="continueButton" type="button">
+          Continuar
+        </button>
+        <button class="secondary-button" id="skipButton" type="button">
+          Prefiero no responder
+        </button>
+      </div>
+
+      <div class="feedback" id="feedback" aria-live="polite">
+        <p id="feedbackText"></p>
+        <p class="small-note" id="feedbackNote"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card final-card hidden" id="ending">
+    <div class="eyebrow">Una última cosita</div>
+
+    <h2>Hay lugares que no aparecen en ningún mapa</h2>
+
+    <p>
+      A veces no necesitamos que alguien nos solucione la vida.
+      A veces basta con encontrar algo que nos recuerde que,
+      incluso en los días difíciles, todavía podemos sentirnos
+      un poquito mejor.
+    </p>
+
+    <div class="riddle">
+      <p>
+        Imagina un lugar al que puedes entrar cuando todo pesa demasiado.
+      </p>
+      <p>
+        No necesitas una dirección, ni una llave de verdad.
+        Puedes llegar con tus dudas, tus miedos, tu cansancio
+        y hasta con esas cosas que no sabes cómo explicar.
+      </p>
+      <p>
+        Es un refugio que existe en una canción de siete voces.
+        Su nombre mezcla lo extraordinario con una tienda,
+        y su puerta no se abre con dinero.
+      </p>
+      <p>
+        <strong>¿Te da curiosidad descubrir qué canción es?</strong>
+      </p>
+    </div>
+
+    <button class="primary-button" id="revealButton" type="button">
+      Quiero descubrirla
+    </button>
+
+    <div class="song-result hidden" id="songResult">
+      <div class="song-kicker">La canción del acertijo</div>
+      <h3>Magic Shop</h3>
+      <div class="artist">BTS</div>
+
+      <p>
+        Ojalá encuentres algo bonito en esta canción.
+        Tal vez no cambie lo que estás viviendo, pero quizá
+        te acompañe un ratito cuando necesites descansar
+        de todo lo demás.
+      </p>
+
+      <p>
+        Si te nace, búscala y escúchala con calma.
+        No tienes que entenderla de una sola vez ni sentir
+        algo en particular. Simplemente escucha y quédate
+        con lo que signifique para ti.
+      </p>
+
+
+    </div>
+
+    <div class="final-note hidden" id="finalNote">
+      <h3>Y antes de irte, quería decirte algo...</h3>
+
+      <p>
+        Hice todo esto pensando en ti Angie. No para que tengas que
+        contarme algo que no quieras, ni para que finjas estar bien
+        si no lo estás.
+      </p>
+
+      <p>
+        Pero sí me gustaría mucho que, si te sientes cómoda conmigo,
+        me puedas decir qué es lo que piensas. Puede ser algo bonito,
+        algo que te preocupe, algo que no sepas cómo explicar o
+        simplemente lo primero que se te venga a la cabeza.
+      </p>
+
+      <p>
+        No tienes que ordenar tus ideas ni buscar las palabras perfectas.
+        De verdad me gustaría leerte y saber qué pasa por tu cabecita
+        ahora mismo.
+      </p>
+
+      <p>
+        Y si no te apetece hablar conmigo, también está bien.
+        No tienes que responder por compromiso.
+      </p>
+
+      <p>
+        Si quieres, puedes escribir lo que sientes acá o también me lo
+        puedes decir cuando acabes de leer esto.
+      </p>
+
+      <p>
+        Este espacio es solo para escribirlo aquí. No se me enviará
+        automáticamente, te lo prometo. Quisiera que te sientas cómoda
+        y, si sientes que te estás forzando a algo que no te gusta,
+        me gustaría saber.
+      </p>
+
+      <p>
+        También quisiera saber si te sientes cómoda con que yo siga
+        siendo así. Para serte sincero, siento que te incomodo y
+        pido disculpas por eso, Angie.
+      </p>
+
+      <label class="write-label" for="finalAnswer">
+        Si quieres, puedes escribir lo que sientes acá.
+      </label>
+
+      <textarea id="finalAnswer"
+        placeholder="Escribe lo que te nazca, sin presión..."></textarea>
+
+      <p class="small-note">
+        Este espacio es solo para escribirlo aquí. No se me enviará
+        automáticamente, te lo prometo. Si prefieres, también puedes
+        decírmelo cuando acabes de leer esto.
+      </p>
+    </div>
+  </section>
+
+
+  <svg class="footer-lily" viewBox="0 0 100 90" aria-hidden="true">
+    <path d="M50 85 C48 65 50 49 50 34"
+          stroke="#80b6bc" stroke-width="2" fill="none"/>
+    <path d="M49 68 C31 53 20 61 17 68
+             C31 70 41 71 49 68Z" fill="#477f91"/>
+    <path d="M51 77 C68 57 80 62 84 68
+             C69 75 59 78 51 77Z" fill="#659ba6"/>
+    <path d="M50 42 C37 30 33 19 40 8
+             C50 17 53 29 50 42Z"
+          fill="#a6cdef" stroke="#d8eaff" stroke-width=".8"/>
+    <path d="M50 42 C45 25 51 11 60 4
+             C67 20 60 34 50 42Z"
+          fill="#d7eaff" stroke="#e7f3ff" stroke-width=".8"/>
+    <path d="M51 42 C59 25 70 22 79 27
+             C72 40 62 43 51 42Z"
+          fill="#91bce8" stroke="#d8eaff" stroke-width=".8"/>
+    <path d="M50 43 C63 39 75 44 79 53
+             C65 57 55 51 50 43Z"
+          fill="#b5d5f4" stroke="#d8eaff" stroke-width=".8"/>
+    <path d="M49 43 C39 41 29 47 27 57
+             C40 56 47 49 49 43Z"
+          fill="#8db7e2" stroke="#d8eaff" stroke-width=".8"/>
+    <path d="M50 43 L58 30 M50 43 L42 32 M50 43 L69 34"
+          stroke="#e8c992" stroke-width="1.3" fill="none"/>
+  </svg>
+</main>
+
+<script>
+/* Estrellas del fondo */
+const sky = document.getElementById("sky");
+let seed = 9173;
+
+function random() {
+  seed = (seed * 16807) % 2147483647;
+  return (seed - 1) / 2147483646;
+}
+
+for (let i = 0; i < 105; i++) {
+  const star = document.createElement("span");
+  star.className = "star" + (i % 9 === 0 ? " bright" : "");
+  star.style.left = (random() * 100) + "%";
+  star.style.top = (random() * 100) + "%";
+  star.style.setProperty("--duration", (2.5 + random() * 4.5) + "s");
+  star.style.setProperty("--delay", (-random() * 6) + "s");
+  sky.appendChild(star);
+}
+
+/* Preguntas: ninguna respuesta está mal */
+const questions = [
+  {
+    title: "Si pudieras regalarte un ratito de paz, ¿cómo sería?",
+    description:
+      "Sin pensar en lo que deberías hacer. Solo en lo que te haría sentir un poquito mejor.",
+    options: [
+      {
+        text: "Estar tranquila, sin tener que pensar en nada.",
+        message:
+          "Ojalá pudieras tener ese ratito de tranquilidad, sin pendientes ni cosas que resolver. A veces descansar la mente también es una forma de cuidarse."
+      },
+      {
+        text: "Hablar con alguien que me escuche de verdad.",
+        message:
+          "Mereces que te escuchen sin interrumpirte, sin juzgarte y sin intentar arreglarlo todo a la fuerza. A veces uno solo necesita poder hablar con libertad."
+      },
+      {
+        text: "Distraerme y olvidarme un rato de todo.",
+        message:
+          "Está bien querer desconectarte un rato. No tienes que estar pensando en tus problemas a cada momento para demostrar que te importan."
+      },
+      {
+        text: "No hacer absolutamente nada.",
+        message:
+          "Entonces ojalá hoy no tengas que exigirte tanto. No hacer nada por un rato también cuenta como darte un descanso."
+      }
+    ]
+  },
+  {
+    title: "Cuando las cosas se ponen difíciles, ¿qué te gustaría recibir de alguien?",
+    description:
+      "No siempre necesitamos lo mismo. Lo que tú prefieras está bien.",
+    options: [
+      {
+        text: "Que se quede conmigo, aunque no hablemos.",
+        message:
+          "Hay silencios que se sienten cómodos cuando estás con la persona correcta. No siempre hace falta hablar para acompañar a alguien."
+      },
+      {
+        text: "Que me pregunte cómo estoy y de verdad quiera saberlo.",
+        message:
+          "Ojalá siempre encuentres a alguien que te pregunte cómo estás y tenga la paciencia de escuchar la respuesta real, no solamente un «bien» por costumbre."
+      },
+      {
+        text: "Que me haga reír y me ayude a distraerme.",
+        message:
+          "A veces una tontería, una risa inesperada o una conversación sin importancia puede hacer que el día pese un poquito menos. También mereces esos momentos."
+      },
+      {
+        text: "Que me dé mi espacio y no me presione.",
+        message:
+          "Tu espacio también merece respeto. Que alguien se preocupe por ti no debería significar que tengas que explicar todo antes de sentirte preparada."
+      }
+    ]
+  },
+  {
+    title: "Si pudieras decir algo sin miedo a que te malinterpreten, ¿qué elegirías?",
+    description:
+      "Puedes escoger una frase, escribir la tuya o dejarla en blanco. No tienes que explicar nada que no quieras.",
+    options: [
+      {
+        text: "«A veces me canso, aunque no sepa explicar por qué».",
+        message:
+          "No siempre es fácil ponerle nombre al cansancio. No necesitas tener una explicación perfecta para reconocer que algo te está pesando."
+      },
+      {
+        text: "«Quisiera que alguien notara cómo me siento sin tener que decirlo todo».",
+        message:
+          "Es bonito sentirse comprendida sin tener que traducir cada emoción. Y aunque nadie pueda adivinarlo todo, mereces personas que se interesen de verdad por entenderte."
+      },
+      {
+        text: "«También tengo días en los que no puedo con todo».",
+        message:
+          "No tienes que poder con todo siempre. Tener un día difícil no borra las cosas que has superado ni hace que valgas menos."
+      },
+      {
+        text: "«Por ahora, solo necesito un poquito de tranquilidad».",
+        message:
+          "Entonces ojalá encuentres esa tranquilidad, aunque sea en pequeños momentos. No tienes que resolver toda tu vida hoy."
+      }
+    ]
+  }
+];
+
+let currentQuestion = 0;
+let selectedIndex = null;
+let answered = false;
+
+const questionNumber = document.getElementById("questionNumber");
+const questionTitle = document.getElementById("questionTitle");
+const questionDescription = document.getElementById("questionDescription");
+const optionsElement = document.getElementById("options");
+const ownAnswer = document.getElementById("ownAnswer");
+const continueButton = document.getElementById("continueButton");
+const skipButton = document.getElementById("skipButton");
+const feedback = document.getElementById("feedback");
+const feedbackText = document.getElementById("feedbackText");
+const feedbackNote = document.getElementById("feedbackNote");
+const progressCount = document.getElementById("progressCount");
+const progressFill = document.getElementById("progressFill");
+
+function renderQuestion() {
+  const q = questions[currentQuestion];
+
+  selectedIndex = null;
+  answered = false;
+  ownAnswer.value = "";
+
+  feedback.classList.remove("show");
+  feedbackText.textContent = "";
+  feedbackNote.textContent = "";
+
+  questionNumber.textContent =
+    "Pregunta " + String(currentQuestion + 1).padStart(2, "0");
+
+  questionTitle.textContent = q.title;
+  questionDescription.textContent = q.description;
+
+  progressCount.textContent =
+    (currentQuestion + 1) + " de " + questions.length;
+
+  progressFill.style.width =
+    ((currentQuestion / questions.length) * 100) + "%";
+
+  optionsElement.innerHTML = "";
+
+  q.options.forEach((option, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "option";
+    button.textContent = option.text;
+    button.setAttribute("aria-pressed", "false");
+
+    button.addEventListener("click", () => {
+      if (answered) return;
+
+      selectedIndex = index;
+
+      Array.from(optionsElement.children).forEach((child, childIndex) => {
+        const isSelected = childIndex === index;
+        child.classList.toggle("selected", isSelected);
+        child.setAttribute("aria-pressed", String(isSelected));
+      });
+
+      ownAnswer.value = "";
+    });
+
+    optionsElement.appendChild(button);
+  });
+
+  continueButton.textContent =
+    currentQuestion === questions.length - 1
+      ? "Terminar y continuar"
+      : "Continuar";
+
+  skipButton.disabled = false;
+  continueButton.disabled = false;
+}
+
+function showFeedback(message, note) {
+  feedbackText.textContent = message;
+  feedbackNote.textContent = note || "";
+  feedback.classList.add("show");
+}
+
+function nextQuestion(isSkipped = false) {
+  if (answered) {
+    currentQuestion++;
+
+    if (currentQuestion >= questions.length) {
+      showEnding();
+    } else {
+      renderQuestion();
+    }
+
+    return;
+  }
+
+  const written = ownAnswer.value.trim();
+
+  if (!isSkipped && selectedIndex === null && written.length === 0) {
+    showFeedback(
+      "Puedes elegir una opción, escribir algo tuyo o simplemente pasar. No hay ninguna respuesta que tengas que dar.",
+      "Tómate tu tiempo."
+    );
+    return;
+  }
+
+  answered = true;
+  const q = questions[currentQuestion];
+
+  if (isSkipped) {
+    showFeedback(
+      "Está bien, no tienes que responder a todo. A veces también está bien guardar algunas cosas para una misma.",
+      "Puedes seguir cuando quieras."
+    );
+  } else if (written.length > 0) {
+    showFeedback(
+      "Gracias por escribirlo a tu manera. No tienes que encontrar las palabras perfectas ni explicar más de lo que quieras. Lo que sientes merece espacio.",
+      "Tu respuesta no se envía a ninguna persona; se queda en esta página."
+    );
+  } else {
+    showFeedback(
+      q.options[selectedIndex].message,
+      "No hay una forma correcta de sentirse. Esta es simplemente una pequeña pausa para ti."
+    );
+  }
+
+  continueButton.textContent =
+    currentQuestion === questions.length - 1
+      ? "Ver lo que sigue"
+      : "Continuar";
+
+  skipButton.disabled = true;
+}
+
+function showEnding() {
+  document.getElementById("quiz").classList.add("hidden");
+  document.getElementById("ending").classList.remove("hidden");
+
+  progressFill.style.width = "100%";
+
+  document.getElementById("ending").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
+continueButton.addEventListener("click", () => nextQuestion(false));
+skipButton.addEventListener("click", () => nextQuestion(true));
+
+document.getElementById("revealButton").addEventListener("click", () => {
+  const result = document.getElementById("songResult");
+  const finalNote = document.getElementById("finalNote");
+
+  result.classList.remove("hidden");
+  finalNote.classList.remove("hidden");
+  document.getElementById("revealButton").classList.add("hidden");
+
+  setTimeout(() => {
+    result.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  }, 100);
+});
+
+renderQuestion();
+</script>
+</body>
+</html>
